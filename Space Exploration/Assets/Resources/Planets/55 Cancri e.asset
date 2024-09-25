@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fa51f51187b45a48bc029fc68723ba6, type: 3}
+  m_Name: 55 Cancri e
+  m_EditorClassIdentifier: 
+  groundTexture: {fileID: 2800000, guid: 29c626e9e6e470248a44438be202c7c0, type: 3}
+  planetName: 55 Cancri e
+  planetIcon: {fileID: 21300000, guid: a22adb81cd44e2541b6e9ef156a873d2, type: 3}
+  information:
+  - 55 Cancri e is believed to be composed largely of carbon, including possible
+    diamond layers.
+  - Its surface conditions could include extreme temperatures and high pressures,
+    making it a unique world of carbon-based materials.
+  - The planet is about 1.8 times the size of Earth and has a density significantly
+    higher, indicating a rocky composition.
+  - ' It orbits its star much closer than Mercury orbits the Sun, leading to extreme
+    surface conditions.'
+  - 55 Cancri e was discovered using the radial velocity method, which measures the
+    gravitational influence on its star.
+  - The planet completes an orbit around its star in just 0.74 Earth days.
+  - The close proximity to its star results in extreme temperature differences between
+    the day and night sides.
+  - It orbits a Sun-like star with a similar spectral type (G) as the Sun.

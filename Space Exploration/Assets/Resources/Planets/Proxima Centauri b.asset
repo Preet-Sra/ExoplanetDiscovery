@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fa51f51187b45a48bc029fc68723ba6, type: 3}
+  m_Name: Proxima Centauri b
+  m_EditorClassIdentifier: 
+  groundTexture: {fileID: 2800000, guid: 16fdc16af892fc745890a4d5720a58dd, type: 3}
+  planetName: Proxima Centauri b
+  planetIcon: {fileID: 21300000, guid: e8e37808651443747a535ec980d92ccc, type: 3}
+  information:
+  - Proxima Centauri b is the closest known exoplanet to our solar system, located
+    just over 4 light-years away.
+  - It resides in the habitable zone of Proxima Centauri, where temperatures might
+    allow for liquid water.
+  - ' Its location and star type make it a prime candidate for studying potential
+    habitability.'
+  - The planet completes an orbit around its star in approximately 11.2 Earth days.
+  - The planet might have moons that could also be within the habitable zone, enhancing
+    its potential for habitability.
+  - "The presence of an atmosphere and the star\u2019s activity could affect the
+    planet\u2019s climate and potential for life."
+  - Proxima Centauri b is a key target for future interstellar missions and telescopic
+    observations.
+  - The planet's atmosphere, if present, could provide clues about its habitability
+    and surface conditions.

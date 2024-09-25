@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fa51f51187b45a48bc029fc68723ba6, type: 3}
+  m_Name: Kepler-186f
+  m_EditorClassIdentifier: 
+  groundTexture: {fileID: 2800000, guid: 85ed2b41abc7c82499e10ac4feaa0590, type: 3}
+  planetName: Kepler-186f
+  planetIcon: {fileID: 21300000, guid: c4fc97d14b5f0cd4698d8c6b224eecab, type: 3}
+  information:
+  - It is the first Earth-sized exoplanet found in the habitable zone of its star,
+    potentially allowing for liquid water.
+  - It orbits a red dwarf star, which is cooler and less luminous than our Sun.
+  - The planet completes an orbit around its star in about 130 Earth days.
+  - Its location in the habitable zone suggests that it could have water in liquid
+    form on its surface.
+  - It is one of five planets orbiting its star, contributing to our understanding
+    of multi-planet systems.
+  - The star it orbits has a surface temperature of about 3,500 degrees Fahrenheit
+    (2,000 degrees Celsius), much cooler than the Sun.
+  - If Kepler-186f has moons, they might also be in the habitable zone, increasing
+    the potential for life.
+  - It is located approximately 560 light-years away from Earth, making it one of
+    the more distant potentially habitable planets.

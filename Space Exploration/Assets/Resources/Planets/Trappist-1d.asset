@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fa51f51187b45a48bc029fc68723ba6, type: 3}
+  m_Name: Trappist-1d
+  m_EditorClassIdentifier: 
+  groundTexture: {fileID: 2800000, guid: 6e03d6a07afb8314997276ef200d1f5d, type: 3}
+  planetName: Trappist-1d
+  planetIcon: {fileID: 21300000, guid: 516f2e78fe33b72429c789084ce69d6f, type: 3}
+  information:
+  - Trappist-1d is roughly the same size as Earth, with a similar gravity that could
+    potentially support liquid water.
+  - ' It orbits within the habitable zone of its star, where conditions might be
+    right for liquid water.'
+  - It is part of the TRAPPIST-1 system, which has seven Earth-sized planets, increasing
+    the chances of discovering habitable worlds.
+  - "The planet\u2019s surface temperature is influenced by its proximity to its
+    cooler dwarf star."
+  - Trappist-1d might have moons that could also be within the habitable zone, adding
+    another layer of intrigue.
+  - Trappist-1d completes an orbit around its star in about 4.0 Earth days.
+  - The star it orbits is an ultra-cool red dwarf, much cooler than the Sun, affecting
+    the planet's climate.
+  - ' The TRAPPIST-1 system is a prime target for studying potential habitability
+    and atmospheric conditions.'
