@@ -5,14 +5,29 @@ using UnityEngine;
 public class ResearchPointSpawner : MonoBehaviour
 {
     public PlanetInfo selectedPlanet; // Reference to the selected planet
+    public PlanetInfo[] AllPlanets;
     public GameObject samplePrefab; // Prefab for the samples
     public Transform[] spawnPositions; // Array of empty transforms for spawn positions
     public Terrain terrain;
+    public int samplesToSpawn;
 
-    private void Start()
+    private void Awake()
     {
+        GetCurrentPlanet();
         ChangeTerrainDiffuseTexture();
         SpawnSamples();
+    }
+
+    void GetCurrentPlanet()
+    {
+        foreach(PlanetInfo planet in AllPlanets)
+        {
+            if (planet.planetName == PlayerPrefs.GetString("CurrentPlanet"))
+            {
+                selectedPlanet = planet;
+                break;
+            }
+        }
     }
 
     private void SpawnSamples()
@@ -28,7 +43,7 @@ public class ResearchPointSpawner : MonoBehaviour
         }
 
         // Spawn samples at random positions
-        int samplesToSpawn = Mathf.Min(selectedPlanet.information.Length, positions.Count);
+        samplesToSpawn = Mathf.Min(selectedPlanet.information.Length, positions.Count);
         for (int i = 0; i < samplesToSpawn; i++)
         {
             GameObject sample = Instantiate(samplePrefab, positions[i].position, Quaternion.identity);

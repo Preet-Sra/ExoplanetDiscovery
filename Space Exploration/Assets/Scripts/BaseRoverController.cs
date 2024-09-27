@@ -23,7 +23,7 @@ public class BaseRoverController : MonoBehaviour
     public PlanetInformationShowcase planetInformationShowcase;
     private bool hitDetected;
     MessagePopUp messagePopUp;
-
+    [SerializeField] AudioSource searchSound;
     [SerializeField] GameObject InformationPanel;
     [SerializeField] GameObject ExplodeObject;
     GameObject currentReasearchPoint;
@@ -37,45 +37,44 @@ public class BaseRoverController : MonoBehaviour
 
 
     [Header("Last Position Tracker")]
-   
-    private Vector3 lastSafePosition;
-    public float positionTrackingInterval = 0.5f;
+    public float pushDistance;
+
+    SoundManager soundManager;
+    CameraHandler cameraHandler;
+    GameManager gameManager;
 
     private void Start()
     {
         uIAnimatorHandler = FindObjectOfType<UIAnimatorHandler>();
         researchPointSpawner = FindObjectOfType<ResearchPointSpawner>();
         messagePopUp = MessagePopUp.instance;
-        StartCoroutine(TrackPosition());
+        soundManager = SoundManager.instance;
+        cameraHandler = FindObjectOfType<CameraHandler>();
+        gameManager = GameManager.instance;
+    
     }
 
+ 
     private void EnqueueCommand(IEnumerator command)
     {
         commandQueue.Enqueue(command);
     }
-    IEnumerator TrackPosition()
-    {
-        while (true)
-        {
-            // Only update the last safe position if we're not in the restricted zone
-            if (!isInRestrictedZone)
-            {
-                lastSafePosition = transform.position;
-            }
-            yield return new WaitForSeconds(positionTrackingInterval);
-        }
-    }
+ 
     public IEnumerator ProcessCommands()
     {
+        if (followingCommand) yield break;
+        followingCommand = true;
+
         uIAnimatorHandler.HideUnits();
         uIAnimatorHandler.HideEvertything();
+        cameraHandler.CheckActiveCameraWhileExceutingCommands();
         while (commandQueue.Count > 0)
         {
             yield return StartCoroutine(commandQueue.Dequeue());
             yield return new WaitForSeconds(0.25f);
         }
         commandExecutionManager.RemoveCommands();
-        Debug.Log("All commands executed");
+        
         followingCommand = false;
         uIAnimatorHandler.ShowEveryThing();
     }
@@ -116,7 +115,7 @@ public class BaseRoverController : MonoBehaviour
             else
             {
                 Debug.Log("Entered restricted zone, moving back to last safe position.");
-                yield return StartCoroutine(MoveToLastSafePosition()); // Move back to last safe position
+               // yield return StartCoroutine(MoveToLastSafePosition()); // Move back to last safe position
                 break; // Stop movement after moving back
             }
             yield return null;
@@ -127,29 +126,23 @@ public class BaseRoverController : MonoBehaviour
        
     }
 
-    IEnumerator MoveToLastSafePosition()
+    private IEnumerator CorrectPosition(Vector3 targetPosition)
     {
-        MoveSound.SetActive(true);
 
-        // Move towards the last safe position smoothly
-        while (Vector3.Distance(transform.position, lastSafePosition) > 0.1f)
+        while (Vector3.Distance(transform.position, targetPosition) > 0.1f)
         {
-            transform.position = Vector3.MoveTowards(transform.position, lastSafePosition, moveSpeed * Time.deltaTime);
+            // Move the player smoothly towards the target position
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
             yield return null;
         }
 
-        // Snap to the exact last safe position once we're close enough
-        transform.position = lastSafePosition;
-
-        MoveSound.SetActive(false);
     }
-
 
     IEnumerator Rotate(float degrees)
     {
         Quaternion targetRotation = Quaternion.Euler(transform.eulerAngles + new Vector3(0, degrees, 0));
         followingCommand = true;
-
+        soundManager.PlayAudio(AudioType.Rotate);
         while (Quaternion.Angle(transform.rotation, targetRotation) >= 0.1f)
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
@@ -163,15 +156,17 @@ public class BaseRoverController : MonoBehaviour
         // Antenna pops up with a smooth bounce effect
         Antenna.transform.DOScale(Vector3.one, 1f).SetEase(Ease.OutBounce);
         yield return new WaitForSeconds(1f);
-
+        searchSound.Play();
         // Rotate AntennaBody one full circle (360 degrees) starting from its current Y rotation
         float currentYRotation = AntennaBody.transform.rotation.eulerAngles.y;
-        AntennaBody.transform.DORotate(new Vector3(0, currentYRotation + 360, 0), 1.5f, RotateMode.FastBeyond360)
+       AntennaBody.transform.DORotate(new Vector3(0, currentYRotation + 360, 0), 3f, RotateMode.FastBeyond360)
             .SetEase(Ease.Linear);  // Use Linear easing for a smooth rotation
-        messagePopUp.ShowMessage("Analysing.....", 0.5f, 1.5f);
+
+
+        messagePopUp.ShowMessage("Analysing.....", 0.5f, 3f);
         bool pointFound = ResearchPointFound();
 
-        // Wait for 0.7 seconds for the rotation to complete
+      
         yield return new WaitForSeconds(1.5f);
 
         if (pointFound)
@@ -189,15 +184,23 @@ public class BaseRoverController : MonoBehaviour
             planetInformationShowcase.SetInfo(PlanetName, planetSprite, info);
 
             yield return new WaitForSeconds(1.5f);
+            searchSound.Stop();
+            soundManager.PlayAudio(AudioType.DataFound);
             InformationPanel.SetActive(true);
             yield return new WaitUntil(() => InformationPanelClosed());
             yield return new WaitForSeconds(0.3f);
             Antenna.transform.DOScale(Vector3.zero, 1f).SetEase(Ease.OutBack);
             currentReasearchPoint.SetActive(false);
             Instantiate(ExplodeObject, currentReasearchPoint.transform.position, Quaternion.identity);
+            soundManager.PlayAudio(AudioType.Explosion);
+            gameManager.ResearchCompleted();
         }
         else
         {
+            StartCoroutine(ContinuousRotation());
+            yield return new WaitForSeconds(1f);
+            soundManager.PlayAudio(AudioType.Error);
+            searchSound.Stop();
             messagePopUp.ShowMessage("No Data Found !", 0.5f, 1.5f);
             Antenna.transform.DOScale(Vector3.zero, 1f).SetEase(Ease.OutBack);
             yield return new WaitForSeconds(1f);
@@ -258,6 +261,10 @@ public class BaseRoverController : MonoBehaviour
             Debug.Log("Rover entered the restricted zone.");
             isInRestrictedZone = true; // Set the flag to indicate the rover is in the restricted zone
             StopAllMovementCommands(); // Clear any movement commands if necessary
+
+            Vector3 direction = transform.position - other.transform.position;  // Get direction from zone to player
+            Vector3 targetPosition = transform.position + direction.normalized * pushDistance;  // Move away from the zone
+            StartCoroutine(CorrectPosition(targetPosition));  // Start moving the player
         }
     }
 

@@ -10,6 +10,7 @@ public class CommandDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        SoundManager.instance.PlayAudio(AudioType.PointerDown);
         currentDragged = Instantiate(commandPrefab, transform);
         currentDragged.transform.localScale = Vector3.one * 2f;
         currentDragged.transform.position = Input.mousePosition;

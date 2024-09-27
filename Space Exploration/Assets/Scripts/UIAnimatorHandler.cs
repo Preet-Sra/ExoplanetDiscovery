@@ -13,13 +13,15 @@ public class UIAnimatorHandler : MonoBehaviour
     [SerializeField] TMP_Text commandsText, unitsText;
     [SerializeField] Slider unitSlider;
     int maxUnit, minUnit;
+    SoundManager soundManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        abovePanelStartPos = AbovePanel.position;
-        BelowPanelStartPos = BelowPanel.position;
+        abovePanelStartPos = AbovePanel.anchoredPosition;
+        BelowPanelStartPos = BelowPanel.anchoredPosition;
         unitSlider.onValueChanged.AddListener(ChangeUnitsValue);
+        soundManager = SoundManager.instance;
     }
 
     public void ShowUnits()
@@ -37,6 +39,7 @@ public class UIAnimatorHandler : MonoBehaviour
         BelowPanel.DOAnchorPosY(BelowPanelStartPos.y, 0.5f).SetEase(moveEase);
         UnitSelecterPanel.transform.DOScale(Vector3.zero, 0.2f).SetEase(ScaleEase).OnComplete(() => { UnitSelecterPanel.SetActive(false); });
         AbovePanel.DOAnchorPosY(abovePanelStartPos.y, 0.5f).SetEase(moveEase);
+        soundManager.PlayAudio(AudioType.Confirm);
     }
 
     public void SetCommandType(CommandType type)
@@ -109,5 +112,10 @@ public class UIAnimatorHandler : MonoBehaviour
     {
         AbovePanel.transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack);
         BelowPanel.transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack);
+    }
+
+    public void PlayCloseSound()
+    {
+        soundManager.PlayAudio(AudioType.Close);
     }
 }

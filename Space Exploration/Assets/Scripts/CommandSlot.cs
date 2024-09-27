@@ -21,6 +21,7 @@ public class CommandSlot : MonoBehaviour,IPointerDownHandler
 
         currentCommandObj = command.transform.gameObject;
         assignedCommand = command;
+        SoundManager.instance.PlayAudio(AudioType.UiDroppedSucces);
         if(!command.name.Contains("Search"))
             uIAnimatorHandler.ShowUnits();
         uIAnimatorHandler.SetCommandType(assignedCommand);
@@ -31,7 +32,7 @@ public class CommandSlot : MonoBehaviour,IPointerDownHandler
     {
         if (assignedCommand == null || assignedCommand.name== "Search")
             return;
-       
+        SoundManager.instance.PlayAudio(AudioType.PointerDown);
         uIAnimatorHandler.SetCommandType(assignedCommand);
         if (!assignedCommand.name.Contains("Search"))
             uIAnimatorHandler.ShowUnits();
