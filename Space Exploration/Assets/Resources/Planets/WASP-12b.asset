@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundTexture: {fileID: 2800000, guid: af53ed92faa41fd4ebd43ac7e1a8c086, type: 3}
   planetName: WASP-12b
-  planetIcon: {fileID: 21300000, guid: 6a7079e3034297b4ea28b187933df67d, type: 3}
+  planetIcon: {fileID: 21300000, guid: 9b3dc5a8d1b1ee74db2e7e4648d12dc3, type: 3}
   information:
   - The planet is significantly stretched into an elliptical shape due to its close
     orbit around its star.

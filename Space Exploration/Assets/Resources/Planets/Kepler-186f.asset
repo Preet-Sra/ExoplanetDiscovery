@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundTexture: {fileID: 2800000, guid: 85ed2b41abc7c82499e10ac4feaa0590, type: 3}
   planetName: Kepler-186f
-  planetIcon: {fileID: 21300000, guid: c4fc97d14b5f0cd4698d8c6b224eecab, type: 3}
+  planetIcon: {fileID: 21300000, guid: bc31d103eb6cc204eb718f94a4e73542, type: 3}
   information:
   - It is the first Earth-sized exoplanet found in the habitable zone of its star,
     potentially allowing for liquid water.

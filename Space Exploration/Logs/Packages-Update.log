@@ -75,3 +75,28 @@ The following packages were added:
   com.unity.shadergraph@14.0.10
   com.unity.test-framework@1.1.33
   com.unity.modules.subsystems@1.0.0
+
+=== Thu Oct  3 20:14:34 2024
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.ads from version 2.0.8 to 4.4.2
+  com.unity.analytics from version 3.2.3 to 3.8.1
+  com.unity.collab-proxy from version 1.2.15 to 2.2.0
+  com.unity.postprocessing from version 2.2.1 to 3.4.0
+  com.unity.purchasing from version 2.0.3 to 4.9.3
+  com.unity.textmeshpro from version 1.4.1 to 3.0.6
+The following packages were removed:
+  com.unity.package-manager-ui@2.0.8
+
+=== Thu Oct  3 20:14:35 2024
+
+Packages were changed.
+Update Mode: mergeDefaultDependencies
+
+The following packages were added:
+  com.unity.ads@4.4.2
+  com.unity.analytics@3.8.1
+  com.unity.purchasing@4.9.3

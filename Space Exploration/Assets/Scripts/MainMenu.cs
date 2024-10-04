@@ -12,10 +12,13 @@ public class MainMenu : MonoBehaviour
     SoundManager soundManager;
     private int CurrentIndex;
     public Image planetImage;
+    SceneTransitionManager sceneTransitionManager;
     public TMP_Text planetName;
+    public float fadeInSpeed;
     private void Start()
     {
         soundManager = SoundManager.instance;
+        sceneTransitionManager = FindObjectOfType<SceneTransitionManager>();
     }
 
     public void PlayButtonPress()
@@ -64,7 +67,7 @@ public class MainMenu : MonoBehaviour
         soundManager.PlayAudio(AudioType.ButtonPress);
         PlanetInfo currentPlanet = AllPlanets[CurrentIndex];
         PlayerPrefs.SetString("CurrentPlanet", currentPlanet.planetName);
-
-        SceneManager.LoadScene("Game");
+        sceneTransitionManager.FadeInAndLoadScene("Cutscene", fadeInSpeed);
+        //SceneManager.LoadScene("Game");
     }
 }

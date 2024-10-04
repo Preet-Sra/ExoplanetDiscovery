@@ -14,6 +14,7 @@ public class UIAnimatorHandler : MonoBehaviour
     [SerializeField] Slider unitSlider;
     int maxUnit, minUnit;
     SoundManager soundManager;
+    [SerializeField] GameObject GuidePanel;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +23,9 @@ public class UIAnimatorHandler : MonoBehaviour
         BelowPanelStartPos = BelowPanel.anchoredPosition;
         unitSlider.onValueChanged.AddListener(ChangeUnitsValue);
         soundManager = SoundManager.instance;
+        GuidePanel.transform.localScale = Vector3.zero;
+        GuidePanel.SetActive(true);
+        GuidePanel.transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack);
     }
 
     public void ShowUnits()
@@ -117,5 +121,20 @@ public class UIAnimatorHandler : MonoBehaviour
     public void PlayCloseSound()
     {
         soundManager.PlayAudio(AudioType.Close);
+    }
+
+    public void ShowGuide()
+    {
+        soundManager.PlayAudio(AudioType.Close);
+        GuidePanel.transform.localScale = Vector3.zero;
+        GuidePanel.SetActive(true);
+        GuidePanel.transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack);
+       
+    }
+
+    public void CloseGuide()
+    {
+        soundManager.PlayAudio(AudioType.Close);
+        GuidePanel.transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.OutBack).OnComplete( ()=>GuidePanel.SetActive(false));
     }
 }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundTexture: {fileID: 2800000, guid: 6e03d6a07afb8314997276ef200d1f5d, type: 3}
   planetName: Trappist-1d
-  planetIcon: {fileID: 21300000, guid: 516f2e78fe33b72429c789084ce69d6f, type: 3}
+  planetIcon: {fileID: 21300000, guid: 27783abd342d3674392f24ac06f08339, type: 3}
   information:
   - Trappist-1d is roughly the same size as Earth, with a similar gravity that could
     potentially support liquid water.
