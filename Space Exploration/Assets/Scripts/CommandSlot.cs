@@ -16,6 +16,7 @@ public class CommandSlot : MonoBehaviour,IPointerDownHandler
        
         if (currentCommandObj != null)
         {
+            assignedCommand = null;
             Destroy(currentCommandObj);
         }
 
@@ -43,6 +44,7 @@ public class CommandSlot : MonoBehaviour,IPointerDownHandler
     {
         if (currentCommandObj != null)
         {
+            assignedCommand = null;
             Destroy(currentCommandObj);
         }
 

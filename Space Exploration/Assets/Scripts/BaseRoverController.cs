@@ -27,6 +27,7 @@ public class BaseRoverController : MonoBehaviour
     [SerializeField] GameObject InformationPanel;
     [SerializeField] GameObject ExplodeObject;
     GameObject currentReasearchPoint;
+    MiniGameHandler miniGameHandler;
     ResearchPointSpawner researchPointSpawner;
 
     [Space(1)]
@@ -42,12 +43,14 @@ public class BaseRoverController : MonoBehaviour
     SoundManager soundManager;
     CameraHandler cameraHandler;
     GameManager gameManager;
+    [SerializeField] GameObject AnimationGuide;
 
     private void Start()
     {
         uIAnimatorHandler = FindObjectOfType<UIAnimatorHandler>();
         researchPointSpawner = FindObjectOfType<ResearchPointSpawner>();
         messagePopUp = MessagePopUp.instance;
+        miniGameHandler = FindObjectOfType<MiniGameHandler>();
         soundManager = SoundManager.instance;
         cameraHandler = FindObjectOfType<CameraHandler>();
         gameManager = GameManager.instance;
@@ -59,7 +62,10 @@ public class BaseRoverController : MonoBehaviour
     {
         commandQueue.Enqueue(command);
     }
+
+
  
+
     public IEnumerator ProcessCommands()
     {
         if (followingCommand) yield break;
@@ -186,14 +192,16 @@ public class BaseRoverController : MonoBehaviour
             yield return new WaitForSeconds(1.5f);
             searchSound.Stop();
             soundManager.PlayAudio(AudioType.DataFound);
-            InformationPanel.SetActive(true);
+            miniGameHandler.ShowMiniGame();
+
+         /*   //InformationPanel.SetActive(true);
             yield return new WaitUntil(() => InformationPanelClosed());
             yield return new WaitForSeconds(0.3f);
             Antenna.transform.DOScale(Vector3.zero, 1f).SetEase(Ease.OutBack);
             currentReasearchPoint.SetActive(false);
             Instantiate(ExplodeObject, currentReasearchPoint.transform.position, Quaternion.identity);
             soundManager.PlayAudio(AudioType.Explosion);
-            gameManager.ResearchCompleted();
+            gameManager.ResearchCompleted();*/
         }
         else
         {
@@ -205,6 +213,33 @@ public class BaseRoverController : MonoBehaviour
             Antenna.transform.DOScale(Vector3.zero, 1f).SetEase(Ease.OutBack);
             yield return new WaitForSeconds(1f);
         }
+    }
+
+
+    public IEnumerator CheckMinGameStae(bool won)
+    {
+        if (won)
+        {
+            InformationPanel.SetActive(true);
+            yield return new WaitUntil(() => InformationPanelClosed());
+            yield return new WaitForSeconds(0.3f);
+            Antenna.transform.DOScale(Vector3.zero, 1f).SetEase(Ease.OutBack);
+            currentReasearchPoint.SetActive(false);
+            Instantiate(ExplodeObject, currentReasearchPoint.transform.position, Quaternion.identity);
+            soundManager.PlayAudio(AudioType.Explosion);
+            gameManager.ResearchCompleted();
+        }
+        else
+        {
+            yield return new WaitForSeconds(0.3f);
+            Antenna.transform.DOScale(Vector3.zero, 1f).SetEase(Ease.OutBack);
+            soundManager.PlayAudio(AudioType.Error);
+            searchSound.Stop();
+            messagePopUp.ShowMessage("Error 49: Time Over !", 0.5f, 1.5f);
+            Antenna.transform.DOScale(Vector3.zero, 1f).SetEase(Ease.OutBack);
+            yield return new WaitForSeconds(1f);
+        }
+        uIAnimatorHandler.ShowEveryThing();
     }
 
     IEnumerator ContinuousRotation()
@@ -224,6 +259,7 @@ public class BaseRoverController : MonoBehaviour
         return !InformationPanel.activeInHierarchy; // Simplified logic
     }
 
+   
     bool ResearchPointFound()
     {
         // Find all colliders within the specified radius

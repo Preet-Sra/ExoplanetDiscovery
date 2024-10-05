@@ -2,12 +2,13 @@
 using UnityEngine;
 
 
-public enum AudioType { Error,DataFound,Rotate,UiDroppedSucces,PointerDown ,Close,Confirm,Explosion,CameraChange,Won,ButtonPress}
+public enum AudioType { Error,DataFound,Rotate,UiDroppedSucces,PointerDown ,Close,Confirm,Explosion,CameraChange,Won,ButtonPress,Asteroid,AsteroidDestroyed}
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
     AudioSource SfxAudio;
-    [SerializeField] AudioClip errorSound, dataFoundSound,rotateSound,uiDroopedSuccessSound,PointerDownSound,CloseSound,ConfirmSound,explosionSound,cameraChangeSound,wonSound,buttonPressSound;
+    [SerializeField] AudioClip errorSound, dataFoundSound,rotateSound,uiDroopedSuccessSound,PointerDownSound,CloseSound,ConfirmSound,explosionSound,cameraChangeSound,wonSound,buttonPressSound,asteroidDestroyedSound;
+    [SerializeField] AudioClip[] AsteroidsSounds;
 
     private void Start()
     {
@@ -60,6 +61,12 @@ public class SoundManager : MonoBehaviour
                 return wonSound;
             case AudioType.ButtonPress:
                 return buttonPressSound;
+
+            case AudioType.Asteroid:
+                return AsteroidsSounds[Random.Range(0, AsteroidsSounds.Length)];
+
+            case AudioType.AsteroidDestroyed:
+                return asteroidDestroyedSound;
             default:
                 return null;
         }
