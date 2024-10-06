@@ -24,7 +24,7 @@ public class BaseRoverController : MonoBehaviour
     private bool hitDetected;
     MessagePopUp messagePopUp;
     [SerializeField] AudioSource searchSound;
-    [SerializeField] GameObject InformationPanel;
+    [SerializeField] GameObject InformationPanel, MiniGamePanel;
     [SerializeField] GameObject ExplodeObject;
     GameObject currentReasearchPoint;
     MiniGameHandler miniGameHandler;
@@ -44,6 +44,7 @@ public class BaseRoverController : MonoBehaviour
     CameraHandler cameraHandler;
     GameManager gameManager;
     [SerializeField] GameObject AnimationGuide;
+    float YPosition;
 
     private void Start()
     {
@@ -54,10 +55,17 @@ public class BaseRoverController : MonoBehaviour
         soundManager = SoundManager.instance;
         cameraHandler = FindObjectOfType<CameraHandler>();
         gameManager = GameManager.instance;
-    
+        YPosition = transform.position.y;
     }
 
- 
+
+
+    private void Update()
+    {
+        Vector3 temp = transform.position;
+        temp.y = YPosition;
+        transform.position = temp;
+    }
     private void EnqueueCommand(IEnumerator command)
     {
         commandQueue.Enqueue(command);
@@ -78,6 +86,7 @@ public class BaseRoverController : MonoBehaviour
         {
             yield return StartCoroutine(commandQueue.Dequeue());
             yield return new WaitForSeconds(0.25f);
+            uIAnimatorHandler.HideEvertything();
         }
         commandExecutionManager.RemoveCommands();
         
@@ -135,10 +144,11 @@ public class BaseRoverController : MonoBehaviour
     private IEnumerator CorrectPosition(Vector3 targetPosition)
     {
 
-        while (Vector3.Distance(transform.position, targetPosition) > 0.1f)
+        while (Vector3.Distance( transform.position, new Vector3( targetPosition.x,transform.position.y,targetPosition.z)) > 0.1f)
         {
             // Move the player smoothly towards the target position
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, new Vector3(targetPosition.x, transform.position.y, targetPosition.z), moveSpeed * Time.deltaTime);
+            Debug.Log("Here");
             yield return null;
         }
 
@@ -149,7 +159,7 @@ public class BaseRoverController : MonoBehaviour
         Quaternion targetRotation = Quaternion.Euler(transform.eulerAngles + new Vector3(0, degrees, 0));
         followingCommand = true;
         soundManager.PlayAudio(AudioType.Rotate);
-        while (Quaternion.Angle(transform.rotation, targetRotation) >= 0.1f)
+        while (Quaternion.Angle( transform.rotation, targetRotation) >= 0.1f)
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
             yield return null;
@@ -193,15 +203,8 @@ public class BaseRoverController : MonoBehaviour
             searchSound.Stop();
             soundManager.PlayAudio(AudioType.DataFound);
             miniGameHandler.ShowMiniGame();
-
-         /*   //InformationPanel.SetActive(true);
+            yield return new WaitUntil(() => MiniGameClosed());
             yield return new WaitUntil(() => InformationPanelClosed());
-            yield return new WaitForSeconds(0.3f);
-            Antenna.transform.DOScale(Vector3.zero, 1f).SetEase(Ease.OutBack);
-            currentReasearchPoint.SetActive(false);
-            Instantiate(ExplodeObject, currentReasearchPoint.transform.position, Quaternion.identity);
-            soundManager.PlayAudio(AudioType.Explosion);
-            gameManager.ResearchCompleted();*/
         }
         else
         {
@@ -258,8 +261,11 @@ public class BaseRoverController : MonoBehaviour
     {
         return !InformationPanel.activeInHierarchy; // Simplified logic
     }
+    private bool MiniGameClosed()
+    {
+        return !MiniGamePanel.activeInHierarchy; // Simplified logic
+    }
 
-   
     bool ResearchPointFound()
     {
         // Find all colliders within the specified radius
@@ -294,7 +300,7 @@ public class BaseRoverController : MonoBehaviour
     {
         if (other.CompareTag("RestrictedZone"))
         {
-            Debug.Log("Rover entered the restricted zone.");
+            
             isInRestrictedZone = true; // Set the flag to indicate the rover is in the restricted zone
             StopAllMovementCommands(); // Clear any movement commands if necessary
 
@@ -308,7 +314,7 @@ public class BaseRoverController : MonoBehaviour
     {
         if (other.CompareTag("RestrictedZone"))
         {
-            Debug.Log("Rover exited the restricted zone.");
+           
             isInRestrictedZone = false; // Reset the flag when exiting the restricted zone
         }
     }
@@ -317,6 +323,12 @@ public class BaseRoverController : MonoBehaviour
     {
         // Clear movement commands but keep the command queue intact
         commandQueue.Clear(); // Clear movement-related commands
-        Debug.Log("All movement commands cleared.");
+
+        followingCommand = false;
+
+        // Optionally show the UI again, if needed
+        uIAnimatorHandler.ShowEveryThing();
+        MoveSound.SetActive(false);
+
     }
 }

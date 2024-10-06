@@ -14,7 +14,7 @@ public class UIAnimatorHandler : MonoBehaviour
     [SerializeField] Slider unitSlider;
     int maxUnit, minUnit;
     SoundManager soundManager;
-    [SerializeField] GameObject GuidePanel;
+    [SerializeField] GameObject GuidePanel, AnimationGuide;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +27,10 @@ public class UIAnimatorHandler : MonoBehaviour
         GuidePanel.SetActive(true);
         GuidePanel.transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack);
     }
-
+    public void HideGuideAnimation()
+    {
+        AnimationGuide.SetActive(false);
+    }
     public void ShowUnits()
     {
         

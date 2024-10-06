@@ -789,7 +789,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.50980395}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1717,6 +1717,7 @@ MonoBehaviour:
   planetInformationShowcase: {fileID: 1462528734}
   searchSound: {fileID: 8867063463193818299}
   InformationPanel: {fileID: 1462528729}
+  MiniGamePanel: {fileID: 2035862845}
   ExplodeObject: {fileID: 1477149459573506, guid: d80fd7398f5006b4083eecd2e7e62957,
     type: 3}
   MoveSound: {fileID: 1501902467}
@@ -3857,6 +3858,7 @@ MonoBehaviour:
   unitsText: {fileID: 628371306}
   unitSlider: {fileID: 410549474}
   GuidePanel: {fileID: 1212603095}
+  AnimationGuide: {fileID: 190944860}
 --- !u!114 &422284289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4472,7 +4474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -8255,7 +8257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.4339623, g: 0, b: 0, a: 0.9529412}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -13980,7 +13982,6 @@ GameObject:
   - component: {fileID: 1756887373}
   - component: {fileID: 1756887376}
   - component: {fileID: 1756887375}
-  - component: {fileID: 1756887374}
   m_Layer: 5
   m_Name: BoxUp
   m_TagString: Untagged
@@ -14008,20 +14009,6 @@ RectTransform:
   m_AnchoredPosition: {x: 615.8, y: -76.2}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1756887374
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1756887372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29849213e8264844883e3fdfd4057463, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  commandPrefab: {fileID: 1007684047089250523, guid: 192fcf1ac028bd644b1eed274e43d60e,
-    type: 3}
 --- !u!114 &1756887375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16461,7 +16448,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2035862846
 RectTransform:
   m_ObjectHideFlags: 0

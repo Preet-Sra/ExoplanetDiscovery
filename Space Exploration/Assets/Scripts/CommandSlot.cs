@@ -26,7 +26,7 @@ public class CommandSlot : MonoBehaviour,IPointerDownHandler
         if(!command.name.Contains("Search"))
             uIAnimatorHandler.ShowUnits();
         uIAnimatorHandler.SetCommandType(assignedCommand);
-       
+        uIAnimatorHandler.HideGuideAnimation();
     }
 
     public void OnPointerDown(PointerEventData eventData)

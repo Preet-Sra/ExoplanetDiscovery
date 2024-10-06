@@ -31,22 +31,7 @@ public class CommandExecutionManager : MonoBehaviour
         StartCoroutine(roverController.ProcessCommands());
     }
 
-    private void Update()
-    {
-        bool oneCommandEntererd = false;
-        foreach(CommandSlot slot in commandSlots)
-        {
-            if (slot.assignedCommand != null)
-            {
-                oneCommandEntererd = true;
-            }
-            break;
-        }
-        if (!oneCommandEntererd)
-            AnimationGuide.SetActive(true);
-        else
-            AnimationGuide.SetActive(false);
-    }
+  
 
     private IEnumerator ExecuteCommand(string commandName,int units)
     {
